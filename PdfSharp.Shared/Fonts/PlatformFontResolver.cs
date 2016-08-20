@@ -429,9 +429,9 @@ namespace PdfSharp.Fonts
         internal unsafe static XFontSource CreateFontSource(string familyName, FontResolvingOptions fontResolvingOptions, string typefaceKey)
         {
             if (string.IsNullOrEmpty(typefaceKey))
-                typefaceKey = XGlyphTypeface.ComputeKey(familyName, fontResolvingOptions);            
+                typefaceKey = XGlyphTypeface.ComputeKey(familyName, fontResolvingOptions);
 
-            UIFontDescriptor descriptor = UIFont.FromName(familyName, 20.0f).FontDescriptor;
+            var descriptor = UIFont.FromName(familyName, 20.0f).FontDescriptor;
 
             UIFontDescriptorSymbolicTraits traits = 0;
 
@@ -523,9 +523,7 @@ namespace PdfSharp.Fonts
                 }
             }
 
-            var fontSource = XFontSource.GetOrCreateFrom(data);
-
-            FontFactory.CacheExistingFontSourceWithNewTypefaceKey(typefaceKey, fontSource);
+            var fontSource = XFontSource.GetOrCreateFrom(typefaceKey, data);
 
             return fontSource;
         }
@@ -540,34 +538,38 @@ namespace PdfSharp.Fonts
             public bool Bold;
         }
 
+        private static Dictionary<AndroidFontInfo, string> fonts = null;
 
         internal static XFontSource CreateFontSource(string familyName, FontResolvingOptions fontResolvingOptions, string typefaceKey)
         {
             if (string.IsNullOrEmpty(typefaceKey))
                 typefaceKey = XGlyphTypeface.ComputeKey(familyName, fontResolvingOptions);
 
-            XmlDocument xmlDoc = new XmlDocument(); 
-            xmlDoc.Load("/system/etc/fonts.xml");
-
-            var fonts = new Dictionary<AndroidFontInfo, string>();
-
-            var familyset = xmlDoc.DocumentElement;
-            foreach (XmlNode family in familyset.ChildNodes)
+            if (fonts == null)
             {
-                if (family.Attributes != null && family.Attributes["name"] != null)
-                {
-                    foreach (XmlNode font in family.ChildNodes)
-                    {
-                        if (font.Attributes["style"] != null && font.Attributes["weight"] != null)
-                        {
-                            var id = new AndroidFontInfo
-                            {
-                                FamilyName = family.Attributes["name"].Value,
-                                Italic = font.Attributes["style"].Value == "italic",
-                                Bold = int.Parse(font.Attributes["weight"].Value) > 500,
-                            };
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load("/system/etc/fonts.xml");
 
-                            fonts[id] = font.ChildNodes[0].Value;
+                fonts = new Dictionary<AndroidFontInfo, string>();
+
+                var familyset = xmlDoc.DocumentElement;
+                foreach (XmlNode family in familyset.ChildNodes)
+                {
+                    if (family.Attributes != null && family.Attributes["name"] != null)
+                    {
+                        foreach (XmlNode font in family.ChildNodes)
+                        {
+                            if (font.Attributes["style"] != null && font.Attributes["weight"] != null)
+                            {
+                                var id = new AndroidFontInfo
+                                {
+                                    FamilyName = family.Attributes["name"].Value,
+                                    Italic = font.Attributes["style"].Value == "italic",
+                                    Bold = int.Parse(font.Attributes["weight"].Value) > 500,
+                                };
+
+                                fonts[id] = font.ChildNodes[0].Value;
+                            }
                         }
                     }
                 }
@@ -586,13 +588,11 @@ namespace PdfSharp.Fonts
 
             if (fonts.TryGetValue(searchId, out path))
             {
-                fontSource = XFontSource.GetOrCreateFrom(File.ReadAllBytes(Path.Combine("/system/fonts/", path)));
-
-                FontFactory.CacheExistingFontSourceWithNewTypefaceKey(typefaceKey, fontSource);
-            }
+                fontSource = XFontSource.GetOrCreateFrom(typefaceKey, File.ReadAllBytes(Path.Combine("/system/fonts/", path)));
+            }            
 
             return fontSource;
         }
 #endif
-        }
+    }
 }

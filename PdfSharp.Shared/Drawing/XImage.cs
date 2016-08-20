@@ -736,10 +736,19 @@ namespace PdfSharp.Drawing
 
 #if __ANDROID__
         public MemoryStream AsJpeg()
-        {            
+        {
             var ms = new MemoryStream();
 
-            _androidImage.Compress(Android.Graphics.Bitmap.CompressFormat.Jpeg, 70, ms);
+            using (Android.Graphics.Bitmap imageWithBG = Android.Graphics.Bitmap.CreateBitmap(_androidImage.Width, _androidImage.Height, _androidImage.GetConfig()))
+            {
+                imageWithBG.EraseColor(Android.Graphics.Color.White);  // set its background to white, or whatever color you want
+                Android.Graphics.Canvas canvas = new Android.Graphics.Canvas(imageWithBG);  // create a canvas to draw on the new image
+                canvas.DrawBitmap(_androidImage, 0f, 0f, null); // draw old image on the background
+
+                imageWithBG.Compress(Android.Graphics.Bitmap.CompressFormat.Jpeg, 70, ms);
+
+                imageWithBG.Recycle();
+            }
 
             return ms;
         }

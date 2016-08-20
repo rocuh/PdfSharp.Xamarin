@@ -32,16 +32,16 @@ namespace PdfSharp.Sample.iOS
 
             var gfx = XGraphics.FromPdfPage(page);
 
-            var font = new XFont("Verdana", 20);
-            var fontBold = new XFont("Verdana", 20, XFontStyle.Bold);
-            var fontItalic = new XFont("Verdana", 20, XFontStyle.Italic);
+            var font = new XFont("Helvetica", 20);
+            var fontBold = new XFont("Helvetica", 20, XFontStyle.Bold);
+            var fontItalic = new XFont("Helvetica", 20, XFontStyle.Italic);
 
             var image = XImage.FromFile("frogs.jpg");
 
             gfx.DrawImage(image, 10, 10, 100, 70);
 
             gfx.DrawString("Test of PdfSharp on iOS", font, new XSolidBrush(XColor.FromArgb(0, 0, 0)), 10, 130);
-            
+
             gfx.DrawString("Test of PdfSharp on iOS in bold", fontBold, new XSolidBrush(XColor.FromArgb(0, 0, 0)), 10, 170);
 
             gfx.DrawString("Test of PdfSharp on iOS in italic", fontItalic, new XSolidBrush(XColor.FromArgb(0, 0, 0)), 10, 210);

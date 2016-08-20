@@ -4258,6 +4258,12 @@ namespace PdfSharp.Drawing  // #??? aufräumen
                 _gsStack.Push(iState);
             }
 #endif
+#if __ANDROID__  || __IOS__           
+            xState = new XGraphicsState();
+            InternalGraphicsState iState = new InternalGraphicsState(this, xState);
+            iState.Transform = _transform;
+            _gsStack.Push(iState);
+#endif
 
             if (_renderer != null)
                 _renderer.Save(xState);
@@ -4301,6 +4307,11 @@ namespace PdfSharp.Drawing  // #??? aufräumen
                 _gsStack.Restore(state.InternalState);
                 _transform = state.InternalState.Transform;
             }
+#endif
+
+#if __ANDROID__ || __IOS__
+            _gsStack.Restore(state.InternalState);
+            _transform = state.InternalState.Transform;
 #endif
 
             if (_renderer != null)
@@ -4451,11 +4462,11 @@ namespace PdfSharp.Drawing  // #??? aufräumen
             get { return _gsStack.Count; }
         }
 
-        #endregion
+#endregion
 
         // --------------------------------------------------------------------------------------------
 
-        #region Properties
+#region Properties
 
         /// <summary>
         /// Gets or sets the smoothing mode.
@@ -4527,11 +4538,11 @@ namespace PdfSharp.Drawing  // #??? aufräumen
         //public Matrix Transform { get; set; }
         //public GdiRectF VisibleClipBounds { get; }
 
-        #endregion
+#endregion
 
         // --------------------------------------------------------------------------------------------
 
-        #region Transformation
+#region Transformation
 
         /// <summary>
         /// Applies the specified translation operation to the transformation matrix of this object by 
@@ -4780,11 +4791,11 @@ namespace PdfSharp.Drawing  // #??? aufräumen
         //{
         //}
 
-        #endregion
+#endregion
 
         // --------------------------------------------------------------------------------------------
 
-        #region Clipping
+#region Clipping
 
 #if GDI
         /// <summary>
@@ -4879,11 +4890,11 @@ namespace PdfSharp.Drawing  // #??? aufräumen
         //public void IntersectClip(Region region);
         //public void ExcludeClip(Region region);
 
-        #endregion
+#endregion
 
         // --------------------------------------------------------------------------------------------
 
-        #region Miscellaneous
+#region Miscellaneous
 
         /// <summary>
         /// Writes a comment to the output stream. Comments have no effect on the rendering of the output.
@@ -4921,11 +4932,11 @@ namespace PdfSharp.Drawing  // #??? aufräumen
         }
         SpaceTransformer _transformer;
 
-        #endregion
+#endregion
 
         // --------------------------------------------------------------------------------------------
 
-        #region Internal Helper Functions
+#region Internal Helper Functions
 
 #if GDI
         /// <summary>
@@ -5067,7 +5078,7 @@ namespace PdfSharp.Drawing  // #??? aufräumen
         }
 #endif
 
-        #endregion
+#endregion
 
         ///// <summary>
         ///// Testcode

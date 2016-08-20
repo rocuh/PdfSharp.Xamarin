@@ -307,29 +307,29 @@ namespace PdfSharp.Fonts.OpenType
         {
             try
             {
-                CMap4 cmap = FontFace.cmap.cmap4;
-                int segCount = cmap.segCountX2 / 2;
+                CMap4 cmap4 = FontFace.cmap.cmap4;
+                int segCount = cmap4.segCountX2 / 2;
                 int seg;
                 for (seg = 0; seg < segCount; seg++)
                 {
-                    if (value <= cmap.endCount[seg])
+                    if (value <= cmap4.endCount[seg])
                         break;
                 }
                 Debug.Assert(seg < segCount);
 
-                if (value < cmap.startCount[seg])
+                if (value < cmap4.startCount[seg])
                     return 0;
 
-                if (cmap.idRangeOffs[seg] == 0)
-                    return (value + cmap.idDelta[seg]) & 0xFFFF;
+                if (cmap4.idRangeOffs[seg] == 0)
+                    return (value + cmap4.idDelta[seg]) & 0xFFFF;
 
-                int idx = cmap.idRangeOffs[seg] / 2 + (value - cmap.startCount[seg]) - (segCount - seg);
-                Debug.Assert(idx >= 0 && idx < cmap.glyphCount);
+                int idx = cmap4.idRangeOffs[seg] / 2 + (value - cmap4.startCount[seg]) - (segCount - seg);
+                Debug.Assert(idx >= 0 && idx < cmap4.glyphCount);
 
-                if (cmap.glyphIdArray[idx] == 0)
+                if (cmap4.glyphIdArray[idx] == 0)
                     return 0;
 
-                return (cmap.glyphIdArray[idx] + cmap.idDelta[seg]) & 0xFFFF;
+                return (cmap4.glyphIdArray[idx] + cmap4.idDelta[seg]) & 0xFFFF;
             }
             catch
             {

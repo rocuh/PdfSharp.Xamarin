@@ -195,7 +195,7 @@ namespace PdfSharp.Drawing
         }
 #endif
 
-        static XFontSource GetOrCreateFrom(string typefaceKey, byte[] fontBytes)
+        public static XFontSource GetOrCreateFrom(string typefaceKey, byte[] fontBytes)
         {
             XFontSource fontSource;
             ulong key = FontHelper.CalcChecksum(fontBytes);
