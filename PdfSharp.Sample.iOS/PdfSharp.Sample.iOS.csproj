@@ -101,6 +101,7 @@
     <None Include="GettingStarted.Xamarin" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ViewController.designer.cs">
@@ -111,6 +112,10 @@
     <InterfaceDefinition Include="Resources\LaunchScreen.xib" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="OxyPlot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Core.1.0.0-unstable2100\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1+Xamarin.iOS10\OxyPlot.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -121,7 +126,7 @@
     <BundleResource Include="Resources\frogs.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\PdfSharp.iOS\PdfSharp.iOS.csproj">
+    <ProjectReference Include="..\PdfSharp.iOS\PdfSharp.iOS.csproj">
       <Project>{aa510ea8-884d-4d0d-a9ec-d034651e133c}</Project>
       <Name>PdfSharp.iOS</Name>
       <IsAppExtension>false</IsAppExtension>
