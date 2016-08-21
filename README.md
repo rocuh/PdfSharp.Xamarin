@@ -22,7 +22,7 @@ Currently all images created via XGraphics are converted to jpegs with 70% quali
 
 ## License
 
-Copyright (c) 2005-2007 empira Software GmbH, Cologne (Germany)
+Copyright (c) 2005-2007 empira Software GmbH, Cologne (Germany)  
 Modified work Copyright (c) 2016 David Dunscombe
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
