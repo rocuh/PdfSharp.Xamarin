@@ -1,5 +1,5 @@
 # PdfSharp.Xamarin
-**PdfSharp.Xamarin** is a partial port of [PdfSharp](http://www.pdfsharp.com/) for iOS and Android using Xamarin, it allows for creation and modification of PDF files.
+**PdfSharp.Xamarin** is a partial port of [PdfSharp](http://www.pdfsharp.net/) for iOS and Android using Xamarin, it allows for creation and modification of PDF files.
 
 Currently all images created via XGraphics are converted to jpegs with 70% quality.
 
