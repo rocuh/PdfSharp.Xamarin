@@ -1175,7 +1175,7 @@ namespace PdfSharp.Drawing.Pdf
                 pt2.X, pt2.Y);
         }
 
-#if CORE_
+#if CORE_ 
         /// <summary>
         /// Appends the content of a GraphicsPath object.
         /// </summary>
@@ -1228,7 +1228,7 @@ namespace PdfSharp.Drawing.Pdf
         }
 #endif
 
-#if CORE
+#if CORE  || __IOS__ || __ANDROID__
         /// <summary>
         /// Appends the content of a GraphicsPath object.
         /// </summary>
@@ -1340,7 +1340,7 @@ namespace PdfSharp.Drawing.Pdf
         }
 #endif
 
-#if CORE || GDI
+#if CORE || GDI || __IOS__ || __ANDROID__
         void AppendPath(XPoint[] points, Byte[] types)
         {
             const string format = Config.SignificantFigures4;

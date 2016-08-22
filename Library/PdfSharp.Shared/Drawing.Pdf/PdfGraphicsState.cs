@@ -520,7 +520,7 @@ namespace PdfSharp.Drawing.Pdf
 #endif
             _renderer.BeginGraphicMode();
             RealizeCtm();
-#if CORE
+#if CORE || __IOS__ || __ANDROID__
             _renderer.AppendPath(clipPath._corePath);
 #endif
 #if GDI && !WPF

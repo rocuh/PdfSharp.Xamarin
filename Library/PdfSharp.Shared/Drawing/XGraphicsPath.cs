@@ -63,7 +63,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public XGraphicsPath()
         {
-#if CORE
+#if CORE || __IOS__ || __ANDROID__
             _corePath = new CoreGraphicsPath();
 #endif
 #if GDI
@@ -156,7 +156,7 @@ namespace PdfSharp.Drawing
         public XGraphicsPath Clone()
         {
             XGraphicsPath path = (XGraphicsPath)MemberwiseClone();
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             _corePath = new CoreGraphicsPath(_corePath);
 #endif
 #if GDI
@@ -225,7 +225,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void AddLine(double x1, double y1, double x2, double y2)
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             _corePath.MoveOrLineTo(x1, y1);
             _corePath.LineTo(x2, y2, false);
 #endif
@@ -307,7 +307,7 @@ namespace PdfSharp.Drawing
             int count = points.Length;
             if (count == 0)
                 return;
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             _corePath.MoveOrLineTo(points[0].X, points[0].Y);
             for (int idx = 1; idx < count; idx++)
                 _corePath.LineTo(points[idx].X, points[idx].Y, false);
@@ -398,7 +398,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void AddBezier(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             _corePath.MoveOrLineTo(x1, y1);
             _corePath.BezierTo(x2, y2, x3, y3, x4, y4, false);
 #endif
@@ -492,7 +492,7 @@ namespace PdfSharp.Drawing
                 throw new ArgumentException("Invalid number of points for bezier curve. Number must fulfil 4+3n.",
                     "points");
 
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             _corePath.MoveOrLineTo(points[0].X, points[0].Y);
             for (int idx = 1; idx < count; idx += 3)
             {
@@ -623,7 +623,7 @@ namespace PdfSharp.Drawing
             int count = points.Length;
             if (count < 2)
                 throw new ArgumentException("AddCurve requires two or more points.", "points");
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             _corePath.AddCurve(points, tension);
 #endif
 #if GDI
@@ -701,7 +701,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void AddCurve(XPoint[] points, int offset, int numberOfSegments, double tension)
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             throw new NotImplementedException("AddCurve not yet implemented.");
 #endif
 #if GDI
@@ -752,7 +752,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void AddArc(double x, double y, double width, double height, double startAngle, double sweepAngle)
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             _corePath.AddArc(x, y, width, height, startAngle, sweepAngle);
 #endif
 #if GDI
@@ -801,7 +801,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void AddArc(XPoint point1, XPoint point2, XSize size, double rotationAngle, bool isLargeArg, XSweepDirection sweepDirection)
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             _corePath.AddArc(point1, point2, size, rotationAngle, isLargeArg, sweepDirection);
 #endif
 #if GDI
@@ -865,7 +865,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void AddRectangle(XRect rect)
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             _corePath.MoveTo(rect.X, rect.Y);
             _corePath.LineTo(rect.X + rect.Width, rect.Y, false);
             _corePath.LineTo(rect.X + rect.Width, rect.Y + rect.Height, false);
@@ -971,7 +971,7 @@ namespace PdfSharp.Drawing
             int count = rects.Length;
             for (int idx = 0; idx < count; idx++)
             {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
                 AddRectangle(rects[idx]);
 #endif
 #if GDI
@@ -1058,7 +1058,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void AddRoundedRectangle(double x, double y, double width, double height, double ellipseWidth, double ellipseHeight)
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
 #if true
             double arcWidth = ellipseWidth / 2;
             double arcHeight = ellipseHeight / 2;
@@ -1265,7 +1265,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void AddEllipse(double x, double y, double width, double height)
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             double w = width / 2;
             double h = height / 2;
             double xc = x + w;
@@ -1370,7 +1370,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void AddPolygon(XPoint[] points)
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             int count = points.Length;
             if (count == 0)
                 return;
@@ -1453,7 +1453,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void AddPie(double x, double y, double width, double height, double startAngle, double sweepAngle)
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             DiagnosticsHelper.HandleNotImplemented("XGraphicsPath.AddPie");
 #endif
 #if GDI
@@ -1552,7 +1552,7 @@ namespace PdfSharp.Drawing
             if (count < 2)
                 throw new ArgumentException("Not enough points.", "points");
 
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             DiagnosticsHelper.HandleNotImplemented("XGraphicsPath.AddClosedCurve");
 #endif
 #if GDI
@@ -1592,7 +1592,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void AddPath(XGraphicsPath path, bool connect)
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             DiagnosticsHelper.HandleNotImplemented("XGraphicsPath.AddPath");
 #endif
 #if GDI
@@ -1654,7 +1654,7 @@ namespace PdfSharp.Drawing
         {
             try
             {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
                 DiagnosticsHelper.HandleNotImplemented("XGraphicsPath.AddString");
 #endif
 #if GDI
@@ -1840,7 +1840,7 @@ namespace PdfSharp.Drawing
                 return;
 
             XFont font = new XFont(family.Name, emSize, style);
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             DiagnosticsHelper.HandleNotImplemented("XGraphicsPath.AddString");
 #endif
 #if (GDI || CORE_) && !WPF
@@ -1998,7 +1998,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void CloseFigure()
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             _corePath.CloseSubpath();
 #endif
 #if GDI
@@ -2021,7 +2021,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void StartFigure()
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             // TODO: ???
 #endif
 #if GDI
@@ -2053,7 +2053,7 @@ namespace PdfSharp.Drawing
             set
             {
                 _fillMode = value;
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
                 // Nothing to do.
 #endif
 #if GDI
@@ -2079,7 +2079,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void Flatten()
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             // Just do nothing.
 #endif
 #if GDI
@@ -2106,7 +2106,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void Flatten(XMatrix matrix)
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             // Just do nothing.
 #endif
 #if GDI
@@ -2134,7 +2134,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void Flatten(XMatrix matrix, double flatness)
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             // Just do nothing.
 #endif
 #if CORE___
@@ -2170,7 +2170,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void Widen(XPen pen)
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             // Just do nothing.
 #endif
 #if CORE___
@@ -2201,7 +2201,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void Widen(XPen pen, XMatrix matrix)
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             // Just do nothing.
 #endif
 #if CORE
@@ -2232,7 +2232,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public void Widen(XPen pen, XMatrix matrix, double flatness)
         {
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
             // Just do nothing.
 #endif
 #if CORE__
@@ -2265,7 +2265,7 @@ namespace PdfSharp.Drawing
             get { return new XGraphicsPathInternals(this); }
         }
 
-#if CORE
+#if CORE ||  __IOS__ || __ANDROID__
         /// <summary>
         /// Gets access to underlying Core graphics path.
         /// </summary>
