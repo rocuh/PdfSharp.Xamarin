@@ -481,7 +481,7 @@ namespace PdfSharp.Fonts
                 UInt16 entrySelector = 0;
                 UInt16 searchRange = 1;
 
-                while (searchRange < tableCount >> 1)
+                while (searchRange < (tableCount >> 1))
                 {
                     entrySelector++;
                     searchRange <<= 1;
